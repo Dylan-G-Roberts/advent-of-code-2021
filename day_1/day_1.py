@@ -1,6 +1,7 @@
 from typing import List
 import os
 DAYONE_INPUT = os.path.join(os.path.dirname(__file__), 'day_1_input.txt')
+
 class DayOne():
     def count_depth_increases(self, depths: List[int]) -> int:
         num_of_increasing_depths: int = 0
@@ -18,10 +19,22 @@ class DayOne():
             file_data = f.read()
         return file_data
 
+    def count_increasing_window_depths(self, depths: List[int]) -> int:
+        num_of_increasing_window_depths = 0
+        prev = -1
+        curr = -1
+        for i in range(len(depths) - 2):
+            curr = sum(depths[i:i+3])
+            if prev > 0 and curr > prev:
+                num_of_increasing_window_depths += 1
+            prev = curr
+            
+        return num_of_increasing_window_depths
+
 def main():
     day_1 = DayOne()
     day_one_input_list = day_1.convert_input_file_to_list(DAYONE_INPUT)
     print(day_1.count_depth_increases(day_one_input_list))
-
+    print(day_1.count_increasing_window_depths(day_one_input_list))
 if __name__ == '__main__':
     main()
